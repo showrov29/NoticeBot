@@ -30,6 +30,7 @@ const handleNotice = async (req, res) => {
 				const isNotice = await notice.find({ title: Title, link: Link });
 
 				if (isNotice.length == 0) {
+					console.log(noticeText);
 					await newNotice.save();
 					return res.send(noticeText);
 				}

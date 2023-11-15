@@ -25,7 +25,7 @@ server.listen(3000, () => {
 	dbConnect();
 	cron.schedule("*/10 * * * *", async () => {
 		await axios
-			.get("http://localhost:3000" + "/api/notice")
+			.get("https://noticify.onrender.com" + "/api/notice")
 			.then((response) => {
 				try {
 					response.data != null &&
