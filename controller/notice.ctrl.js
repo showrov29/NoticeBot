@@ -25,7 +25,7 @@ const handleNotice = async (bot) => {
 				Title !== undefined &&
 				month !== undefined
 			) {
-				const noticeText = `Time: ${day} ${month} \nTitle: ${Title}\nLink: https://www.aiub.edu/${Link}`;
+				const noticeText = `Time: ${day} ${month}  \n Title: ${Title}  \nLink: https://www.aiub.edu/${Link}`;
 				const newNotice = new notice(data);
 				const isNotice = await notice.find({ title: Title, link: Link });
 
