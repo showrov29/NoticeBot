@@ -20,7 +20,7 @@ const dbConnect = async () => {
 };
 
 const token = "6863715399:AAE7QIPBpbdV0iGPK4WOd5jqSZQlO_RMMLU";
-const userToNotify = ["1628337716", "1683221011"];
+const userToNotify = ["1628337716"];
 // Create a bot instance
 const bot = new TelegramBot(token, { polling: true });
 server.listen(8000, () => {
