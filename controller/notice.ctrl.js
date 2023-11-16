@@ -33,7 +33,7 @@ const handleNotice = async (bot) => {
 					console.log(noticeText);
 					userToNotify.forEach((user) => {
 						bot
-							.sendMessage("1628337716", noticeText)
+							.sendMessage(user, noticeText)
 							.then((result) => {
 								newNotice
 									.save()
