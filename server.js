@@ -6,7 +6,8 @@ const cron = require("node-cron");
 const { default: axios } = require("axios");
 const mongoose = require("mongoose");
 const { handleNotice } = require("./controller/notice.ctrl");
-server.use("/api", noticeRoutes);
+// server.use("/api", noticeRoutes);
+const notice = require("./model/notice");
 const dbConnect = async () => {
 	mongoose
 		.connect(
@@ -15,27 +16,16 @@ const dbConnect = async () => {
 		.then(() => console.log("Connected!"));
 };
 
-let notice;
-
-const token = "6863715399:AAE7QIPBpbdV0iGPK4WOd5jqSZQlO_RMMLU";
-const userToNotify = ["1628337716", "1683221011"];
+const token = "6129056991:AAGIxiLIm1_y2EosqtoEbOhJsduF4vhr5cg";
+// const userToNotify = ["1628337716", "1683221011"];
 // Create a bot instance
 const bot = new TelegramBot(token, { polling: true });
 server.listen(3000, () => {
 	dbConnect();
-	cron.schedule("*/10 * * * *", async () => {
+	cron.schedule("*/5 * * * *", async () => {
 		await axios
-			.get("https://noticify.onrender.com" + "/api/notice")
-			.then((response) => {
-				try {
-					response.data != null &&
-						userToNotify.forEach((user) => {
-							bot.sendMessage(user, response.data);
-						});
-				} catch (error) {
-					console.log(error);
-				}
-			})
+			.get("https://noticify.onrender.com" + "/notice")
+			.then(async (response) => {})
 			.catch((err) => {
 				console.log(err.message);
 			});
@@ -45,6 +35,9 @@ server.listen(3000, () => {
 });
 // replace the value below with the Telegram token you receive from @BotFather
 
+server.get("/notice", async (req, res) => {
+	await handleNotice(bot);
+});
 // Listen for text messages
 bot.on("message", (msg) => {
 	console.log(msg.chat.id);

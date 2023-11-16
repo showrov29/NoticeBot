@@ -2,9 +2,9 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const notice = require("../model/notice");
 const websiteURL = "https://www.aiub.edu/category/notices";
-const TelegramBot = require("node-telegram-bot-api");
-const handleNotice = async (req, res) => {
+const handleNotice = async (bot) => {
 	try {
+		const userToNotify = ["1628337716", "1683221011"];
 		const response = await axios.get(websiteURL);
 		const $ = cheerio.load(response.data);
 
@@ -31,8 +31,18 @@ const handleNotice = async (req, res) => {
 
 				if (isNotice.length == 0) {
 					console.log(noticeText);
-					await newNotice.save();
-					return res.send(noticeText);
+					userToNotify.forEach((user) => {
+						bot
+							.sendMessage("1628337716", noticeText)
+							.then((result) => {
+								newNotice
+									.save()
+									.then((result) => {})
+									.catch((error) => {});
+							})
+							.catch((err) => {});
+					});
+					// return res.send(noticeText);
 				}
 			}
 		});
